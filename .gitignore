@@ -24,6 +24,7 @@ Thumbs.db
 *.pem
 key.properties
 android/key.properties
+setup-secrets.txt
 
 # Docs (jangan di-upload ke repo publik)
 PRD.md
