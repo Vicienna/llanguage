@@ -19,8 +19,11 @@ build/
 Thumbs.db
 
 # Secrets
-android/app/keystore.jks
 *.jks
+*.p12
+*.pem
+key.properties
+android/key.properties
 
 # Docs (jangan di-upload ke repo publik)
 PRD.md
