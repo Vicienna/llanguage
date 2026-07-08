@@ -37,6 +37,7 @@ dependencies:
 
 dependency_overrides:
   js: ^0.7.1
+  analyzer: ^13.0.0
 
 dev_dependencies:
   flutter_test:
