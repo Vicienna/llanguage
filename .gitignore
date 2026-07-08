@@ -22,6 +22,10 @@ Thumbs.db
 android/app/keystore.jks
 *.jks
 
+# Docs (jangan di-upload ke repo publik)
+PRD.md
+AGENT.md
+
 # Dependencies
 .pub/
 .flutter-plugins
