@@ -37,9 +37,9 @@ class TranslatorPage extends ConsumerWidget {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    TextField(
+                    const TextField(
                       maxLines: 3,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         hintText: 'Masukkan teks...',
                         border: OutlineInputBorder(),
                       ),

@@ -12,8 +12,7 @@ class SettingsPage extends ConsumerWidget {
       ),
       body: ListView(
         children: [
-          // AI Provider
-          _SectionHeader(title: 'AI Provider'),
+          const _SectionHeader(title: 'AI Provider'),
           ListTile(
             leading: const Icon(Icons.api),
             title: const Text('AI Provider'),
@@ -23,8 +22,7 @@ class SettingsPage extends ConsumerWidget {
           ),
           const Divider(),
 
-          // Theme
-          _SectionHeader(title: 'Tampilan'),
+          const _SectionHeader(title: 'Tampilan'),
           ListTile(
             leading: const Icon(Icons.palette),
             title: const Text('Tema'),
@@ -34,8 +32,7 @@ class SettingsPage extends ConsumerWidget {
           ),
           const Divider(),
 
-          // Backup
-          _SectionHeader(title: 'Data'),
+          const _SectionHeader(title: 'Data'),
           ListTile(
             leading: const Icon(Icons.backup),
             title: const Text('Backup & Restore'),
@@ -45,8 +42,7 @@ class SettingsPage extends ConsumerWidget {
           ),
           const Divider(),
 
-          // About
-          _SectionHeader(title: 'Tentang'),
+          const _SectionHeader(title: 'Tentang'),
           const ListTile(
             leading: Icon(Icons.info),
             title: Text('Versi'),
