@@ -30,6 +30,9 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Generate platform files
+        run: flutter create --platforms android --project-name llanguage .
+
       - name: Generate code (Drift + Freezed)
         run: dart run build_runner build --delete-conflicting-outputs
 
