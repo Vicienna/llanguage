@@ -31,30 +31,7 @@ jobs:
         run: flutter pub get
 
       - name: Generate platform files
-        run: |
-          flutter create --platforms android --project-name llanguage .
-          rm -f test/widget_test.dart
-          python3 -c "
-with open('android/app/build.gradle.kts') as f:
-    content = f.read()
-
-# Add desugaring to compileOptions if not present
-if 'isCoreLibraryDesugaringEnabled' not in content:
-    content = content.replace(
-        'targetCompatibility = JavaVersion.VERSION_11',
-        'targetCompatibility = JavaVersion.VERSION_11\n        isCoreLibraryDesugaringEnabled = true'
-    )
-
-# Add desugar_jdk_libs dependency if missing
-if 'desugar_jdk_libs' not in content:
-    content = content.replace(
-        'dependencies {',
-        'dependencies {\n    coreLibraryDesugaring(\"com.android.tools:desugar_jdk_libs:2.1.4\")'
-    )
-
-with open('android/app/build.gradle.kts', 'w') as f:
-    f.write(content)
-"
+        run: bash scripts/setup_android.sh
 
       - name: Generate code (Drift + Freezed)
         run: dart run build_runner build --delete-conflicting-outputs
