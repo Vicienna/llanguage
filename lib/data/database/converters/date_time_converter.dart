@@ -4,8 +4,8 @@ class DateTimeConverter extends TypeConverter<DateTime, int> {
   const DateTimeConverter();
 
   @override
-  DateTime mapFromSql(int fromDb) => DateTime.fromMillisecondsSinceEpoch(fromDb);
+  DateTime fromSql(int fromDb) => DateTime.fromMillisecondsSinceEpoch(fromDb);
 
   @override
-  int mapToSql(DateTime value) => value.millisecondsSinceEpoch;
+  int toSql(DateTime value) => value.millisecondsSinceEpoch;
 }

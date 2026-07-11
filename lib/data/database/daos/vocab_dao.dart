@@ -10,7 +10,7 @@ class VocabDao extends DatabaseAccessor<AppDatabase> with _$VocabDaoMixin {
 
   VocabDao(this.db) : super(db);
 
-  Future<Vocab> createVocab({
+  Future<VocabData> createVocab({
     required int lessonId,
     required String sourceWord,
     required String targetWord,
@@ -29,13 +29,13 @@ class VocabDao extends DatabaseAccessor<AppDatabase> with _$VocabDaoMixin {
         partOfSpeech: Value(partOfSpeech),
       ));
 
-  Future<Vocab?> getVocab(int id) =>
+  Future<VocabData?> getVocab(int id) =>
       (db.select(db.vocab)..where((t) => t.id.equals(id))).getSingleOrNull();
 
-  Future<List<Vocab>> getVocabByLesson(int lessonId) =>
+  Future<List<VocabData>> getVocabByLesson(int lessonId) =>
       (db.select(db.vocab)..where((t) => t.lessonId.equals(lessonId))).get();
 
-  Future<Vocab> updateVocab(
+  Future<VocabData> updateVocab(
     int id, {
     String? sourceWord,
     String? targetWord,
@@ -56,9 +56,9 @@ class VocabDao extends DatabaseAccessor<AppDatabase> with _$VocabDaoMixin {
   Future<int> deleteVocab(int id) =>
       (db.delete(db.vocab)..where((t) => t.id.equals(id))).go();
 
-  Future<List<Vocab>> searchVocab(String query) =>
+  Future<List<VocabData>> searchVocab(String query) =>
       (db.select(db.vocab)..where((t) => t.sourceWord.like('%$query%'))).get();
 
-  Future<List<Vocab>> getVocabByPartOfSpeech(String partOfSpeech) =>
+  Future<List<VocabData>> getVocabByPartOfSpeech(String partOfSpeech) =>
       (db.select(db.vocab)..where((t) => t.partOfSpeech.equals(partOfSpeech))).get();
 }

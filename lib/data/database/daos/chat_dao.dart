@@ -10,7 +10,7 @@ class ChatDao extends DatabaseAccessor<AppDatabase> with _$ChatDaoMixin {
 
   ChatDao(this.db) : super(db);
 
-  Future<ChatSession> createSession({
+  Future<ChatSessionData> createSession({
     required String title,
     required String modelProvider,
     required DateTime createdAt,
@@ -23,27 +23,27 @@ class ChatDao extends DatabaseAccessor<AppDatabase> with _$ChatDaoMixin {
         updatedAt: updatedAt,
       ));
 
-  Future<ChatSession?> getSession(int id) =>
+  Future<ChatSessionData?> getSession(int id) =>
       (db.select(db.chatSessions)..where((t) => t.id.equals(id))).getSingleOrNull();
 
-  Future<List<ChatSession>> getAllSessions() => db.select(db.chatSessions).get();
+  Future<List<ChatSessionData>> getAllSessions() => db.select(db.chatSessions).get();
 
-  Future<ChatSession> updateSession(
+  Future<ChatSessionData> updateSession(
     int id, {
     String? title,
     DateTime? updatedAt,
   }) =>
       (db.update(db.chatSessions)..where((t) => t.id.equals(id))).writeReturning(
         ChatSessionsCompanion(
-          title: Value(title),
-          updatedAt: Value(updatedAt),
+          title: title != null ? Value(title) : Value.absent(),
+          updatedAt: updatedAt != null ? Value(updatedAt) : Value.absent(),
         ),
       );
 
   Future<int> deleteSession(int id) =>
       (db.delete(db.chatSessions)..where((t) => t.id.equals(id))).go();
 
-  Future<ChatMessage> addMessage({
+  Future<ChatMessageData> addMessage({
     required int sessionId,
     required String role,
     required String content,
@@ -56,10 +56,10 @@ class ChatDao extends DatabaseAccessor<AppDatabase> with _$ChatDaoMixin {
         createdAt: createdAt,
       ));
 
-  Future<List<ChatMessage>> getMessages(int sessionId) =>
+  Future<List<ChatMessageData>> getMessages(int sessionId) =>
       (db.select(db.chatMessages)
         ..where((t) => t.sessionId.equals(sessionId))
-        ..orderBy([(t) => t.createdAt]))
+        ..orderBy([(t) => OrderingTerm.asc(t.createdAt)]))
       .get();
 
   Future<int> deleteMessages(int sessionId) =>

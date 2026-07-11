@@ -24,7 +24,7 @@ void main() {
       levelId: levelId, title: 'U1', orderIndex: 0, description: 'd',
     ));
     lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(
-      unitId: unitId, title: 'L1', type: 'vocab', contentJson: '{}', isPremium: false,
+      unitId: unitId, title: 'L1', type: 'vocab', orderIndex: 0, contentJson: '{}', isPremium: false,
     ));
   });
 
@@ -66,7 +66,7 @@ void main() {
       final courseId2 = await database.into(database.courses).insert(CoursesCompanion.insert(title: 'C2', sourceLang: 'en', targetLang: 'fr', description: 'd', level: 'beginner', createdAt: now, updatedAt: now));
       final levelId2 = await database.into(database.levels).insert(LevelsCompanion.insert(courseId: courseId2, title: 'L2', orderIndex: 0, description: 'd'));
       final unitId2 = await database.into(database.units).insert(UnitsCompanion.insert(levelId: levelId2, title: 'U2', orderIndex: 0, description: 'd'));
-      final lessonId2 = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId2, title: 'L2', type: 'grammar', contentJson: '{}', isPremium: false));
+      final lessonId2 = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId2, title: 'L2', type: 'grammar', orderIndex: 0, contentJson: '{}', isPremium: false));
 
       await dao.createProgress(lessonId: lessonId, status: 'completed');
       await dao.createProgress(lessonId: lessonId2, status: 'in_progress');
@@ -79,7 +79,7 @@ void main() {
       final courseId2 = await database.into(database.courses).insert(CoursesCompanion.insert(title: 'C2', sourceLang: 'en', targetLang: 'fr', description: 'd', level: 'beginner', createdAt: now, updatedAt: now));
       final levelId2 = await database.into(database.levels).insert(LevelsCompanion.insert(courseId: courseId2, title: 'L2', orderIndex: 0, description: 'd'));
       final unitId2 = await database.into(database.units).insert(UnitsCompanion.insert(levelId: levelId2, title: 'U2', orderIndex: 0, description: 'd'));
-      final lessonId2 = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId2, title: 'L2', type: 'grammar', contentJson: '{}', isPremium: false));
+      final lessonId2 = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId2, title: 'L2', type: 'grammar', orderIndex: 0, contentJson: '{}', isPremium: false));
 
       await dao.createProgress(lessonId: lessonId, status: 'completed', score: 100);
       await dao.createProgress(lessonId: lessonId2, status: 'in_progress');

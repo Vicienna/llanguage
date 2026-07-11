@@ -10,7 +10,7 @@ class CourseDao extends DatabaseAccessor<AppDatabase> with _$CourseDaoMixin {
 
   CourseDao(this.db) : super(db);
 
-  Future<Course> createCourse({
+  Future<CourseData> createCourse({
     required String title,
     required String sourceLang,
     required String targetLang,
@@ -31,12 +31,12 @@ class CourseDao extends DatabaseAccessor<AppDatabase> with _$CourseDaoMixin {
         updatedAt: updatedAt,
       ));
 
-  Future<Course?> getCourse(int id) =>
+  Future<CourseData?> getCourse(int id) =>
       (db.select(db.courses)..where((t) => t.id.equals(id))).getSingleOrNull();
 
-  Future<List<Course>> getAllCourses() => db.select(db.courses).get();
+  Future<List<CourseData>> getAllCourses() => db.select(db.courses).get();
 
-  Future<Course> updateCourse(
+  Future<CourseData> updateCourse(
     int id, {
     String? title,
     String? sourceLang,
@@ -47,18 +47,18 @@ class CourseDao extends DatabaseAccessor<AppDatabase> with _$CourseDaoMixin {
     DateTime? updatedAt,
   }) =>
       (db.update(db.courses)..where((t) => t.id.equals(id))).writeReturning(CoursesCompanion(
-        title: Value(title),
-        sourceLang: Value(sourceLang),
-        targetLang: Value(targetLang),
-        description: Value(description),
-        level: Value(level),
-        thumbnailUrl: Value(thumbnailUrl),
-        updatedAt: Value(updatedAt),
+        title: title != null ? Value(title) : Value.absent(),
+        sourceLang: sourceLang != null ? Value(sourceLang) : Value.absent(),
+        targetLang: targetLang != null ? Value(targetLang) : Value.absent(),
+        description: description != null ? Value(description) : Value.absent(),
+        level: level != null ? Value(level) : Value.absent(),
+        thumbnailUrl: thumbnailUrl != null ? Value(thumbnailUrl) : Value.absent(),
+        updatedAt: updatedAt != null ? Value(updatedAt) : Value.absent(),
       ));
 
   Future<int> deleteCourse(int id) =>
       (db.delete(db.courses)..where((t) => t.id.equals(id))).go();
 
-  Future<List<Course>> getCoursesByLevel(String level) =>
+  Future<List<CourseData>> getCoursesByLevel(String level) =>
       (db.select(db.courses)..where((t) => t.level.equals(level))).get();
 }

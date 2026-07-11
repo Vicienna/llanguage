@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:drift/drift.dart';
 
-class JsonConverter extends TypeConverter<dynamic, String> {
+class JsonConverter extends TypeConverter<Map<String, dynamic>, String> {
   const JsonConverter();
 
   @override
-  dynamic mapFromSql(String fromDb) => jsonDecode(fromDb);
+  Map<String, dynamic> fromSql(String fromDb) => jsonDecode(fromDb) as Map<String, dynamic>;
 
   @override
-  String mapToSql(dynamic value) => jsonEncode(value);
+  String toSql(Map<String, dynamic> value) => jsonEncode(value);
 }

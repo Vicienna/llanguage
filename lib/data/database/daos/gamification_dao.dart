@@ -10,7 +10,7 @@ class GamificationDao extends DatabaseAccessor<AppDatabase> with _$GamificationD
 
   GamificationDao(this.db) : super(db);
 
-  Future<UserXpLog> addXp({
+  Future<UserXpLogData> addXp({
     required int amount,
     required String reason,
     required DateTime createdAt,
@@ -28,15 +28,15 @@ class GamificationDao extends DatabaseAccessor<AppDatabase> with _$GamificationD
     return result.read(db.userXpLog.amount.sum()) ?? 0;
   }
 
-  Future<List<UserXpLog>> getXpLog() => db.select(db.userXpLog).get();
+  Future<List<UserXpLogData>> getXpLog() => db.select(db.userXpLog).get();
 
-  Future<UserGem> initGems() =>
-      db.into(db.userGems).insertReturning(UserGemCompanion.insert(
+  Future<UserGemData> initGems() =>
+      db.into(db.userGems).insertReturning(UserGemsCompanion.insert(
         balance: 0,
         lifetimeEarned: 0,
       ));
 
-  Future<UserGem> addGems({
+  Future<UserGemData> addGems({
     required int amount,
     required String reason,
     required DateTime createdAt,
@@ -56,7 +56,7 @@ class GamificationDao extends DatabaseAccessor<AppDatabase> with _$GamificationD
     );
   }
 
-  Future<UserGem> spendGems({
+  Future<UserGemData> spendGems({
     required int amount,
     required String reason,
     required DateTime createdAt,
@@ -75,12 +75,12 @@ class GamificationDao extends DatabaseAccessor<AppDatabase> with _$GamificationD
     );
   }
 
-  Future<UserGem?> getGems() =>
+  Future<UserGemData?> getGems() =>
       (db.select(db.userGems)..where((t) => t.id.equals(1))).getSingleOrNull();
 
-  Future<List<UserGemsLog>> getGemsLog() => db.select(db.userGemsLog).get();
+  Future<List<UserGemsLogData>> getGemsLog() => db.select(db.userGemsLog).get();
 
-  Future<UserStreak> initStreak(DateTime now) =>
+  Future<UserStreakData> initStreak(DateTime now) =>
       db.into(db.userStreak).insertReturning(UserStreakCompanion.insert(
         currentStreak: 0,
         longestStreak: 0,
@@ -88,7 +88,7 @@ class GamificationDao extends DatabaseAccessor<AppDatabase> with _$GamificationD
         frozenDays: 0,
       ));
 
-  Future<UserStreak> updateStreak({
+  Future<UserStreakData> updateStreak({
     required int currentStreak,
     required int longestStreak,
     required DateTime lastActiveDate,
@@ -103,10 +103,10 @@ class GamificationDao extends DatabaseAccessor<AppDatabase> with _$GamificationD
         ),
       );
 
-  Future<UserStreak?> getStreak() =>
+  Future<UserStreakData?> getStreak() =>
       (db.select(db.userStreak)..where((t) => t.id.equals(1))).getSingleOrNull();
 
-  Future<UserStreakHistory> addStreakHistory({
+  Future<UserStreakHistoryData> addStreakHistory({
     required DateTime date,
     required bool isActive,
     required int streakAtThatTime,
@@ -117,10 +117,10 @@ class GamificationDao extends DatabaseAccessor<AppDatabase> with _$GamificationD
         streakAtThatTime: streakAtThatTime,
       ));
 
-  Future<List<UserStreakHistory>> getStreakHistory() =>
+  Future<List<UserStreakHistoryData>> getStreakHistory() =>
       db.select(db.userStreakHistory).get();
 
-  Future<Achievement> createAchievement({
+  Future<AchievementData> createAchievement({
     required String title,
     required String description,
     String? iconUrl,
@@ -139,9 +139,9 @@ class GamificationDao extends DatabaseAccessor<AppDatabase> with _$GamificationD
         rewardGems: Value(rewardGems),
       ));
 
-  Future<List<Achievement>> getAllAchievements() => db.select(db.achievements).get();
+  Future<List<AchievementData>> getAllAchievements() => db.select(db.achievements).get();
 
-  Future<UserAchievement> unlockAchievement({
+  Future<UserAchievementData> unlockAchievement({
     required int achievementId,
     required DateTime unlockedAt,
   }) =>
@@ -151,6 +151,6 @@ class GamificationDao extends DatabaseAccessor<AppDatabase> with _$GamificationD
         isNew: true,
       ));
 
-  Future<List<UserAchievement>> getUserAchievements() =>
+  Future<List<UserAchievementData>> getUserAchievements() =>
       db.select(db.userAchievements).get();
 }

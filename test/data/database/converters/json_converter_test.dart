@@ -11,51 +11,51 @@ void main() {
   group('JsonConverter', () {
     test('maps Map to JSON string', () {
       final map = {'key': 'value', 'number': 42};
-      final result = converter.mapToSql(map);
+      final result = converter.toSql(map);
       expect(result, equals('{"key":"value","number":42}'));
     });
 
     test('maps JSON string to Map', () {
       final json = '{"key":"value","number":42}';
-      final result = converter.mapFromSql(json);
+      final result = converter.fromSql(json);
       expect(result, equals({'key': 'value', 'number': 42}));
     });
 
     test('maps List to JSON string', () {
       final list = ['a', 'b', 'c'];
-      final result = converter.mapToSql(list);
+      final result = converter.toSql(list);
       expect(result, equals('["a","b","c"]'));
     });
 
     test('maps JSON string to List', () {
       final json = '["a","b","c"]';
-      final result = converter.mapFromSql(json);
+      final result = converter.fromSql(json);
       expect(result, equals(['a', 'b', 'c']));
     });
 
     test('roundtrip preserves Map', () {
       final original = {'name': 'test', 'values': [1, 2, 3]};
-      final sql = converter.mapToSql(original);
-      final back = converter.mapFromSql(sql);
+      final sql = converter.toSql(original);
+      final back = converter.fromSql(sql);
       expect(back, equals(original));
     });
 
     test('roundtrip preserves List', () {
       final original = ['x', 'y', 'z'];
-      final sql = converter.mapToSql(original);
-      final back = converter.mapFromSql(sql);
+      final sql = converter.toSql(original);
+      final back = converter.fromSql(sql);
       expect(back, equals(original));
     });
 
     test('handles empty Map', () {
       final map = <String, dynamic>{};
-      final result = converter.mapToSql(map);
+      final result = converter.toSql(map);
       expect(result, equals('{}'));
     });
 
     test('handles empty List', () {
       final list = <dynamic>[];
-      final result = converter.mapToSql(list);
+      final result = converter.toSql(list);
       expect(result, equals('[]'));
     });
 
@@ -68,8 +68,8 @@ void main() {
           ],
         },
       };
-      final sql = converter.mapToSql(nested);
-      final back = converter.mapFromSql(sql);
+      final sql = converter.toSql(nested);
+      final back = converter.fromSql(sql);
       expect(back, equals(nested));
     });
   });

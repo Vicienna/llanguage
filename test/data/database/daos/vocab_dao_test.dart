@@ -24,7 +24,7 @@ void main() {
       levelId: levelId, title: 'U1', orderIndex: 0, description: 'd',
     ));
     lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(
-      unitId: unitId, title: 'L1', type: 'vocab', contentJson: '{}', isPremium: false,
+      unitId: unitId, title: 'L1', type: 'vocab', orderIndex: 0, contentJson: '{}', isPremium: false,
     ));
   });
 

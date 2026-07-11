@@ -10,7 +10,7 @@ class SrDao extends DatabaseAccessor<AppDatabase> with _$SrDaoMixin {
 
   SrDao(this.db) : super(db);
 
-  Future<UserVocabSr> initSr({
+  Future<UserVocabSrData> initSr({
     required int vocabId,
     required DateTime now,
   }) =>
@@ -22,10 +22,10 @@ class SrDao extends DatabaseAccessor<AppDatabase> with _$SrDaoMixin {
         nextReviewAt: now,
       ));
 
-  Future<UserVocabSr?> getSrByVocab(int vocabId) =>
+  Future<UserVocabSrData?> getSrByVocab(int vocabId) =>
       (db.select(db.userVocabSr)..where((t) => t.vocabId.equals(vocabId))).getSingleOrNull();
 
-  Future<UserVocabSr> updateSr(
+  Future<UserVocabSrData> updateSr(
     int vocabId, {
     required double easeFactor,
     required int interval,
@@ -39,15 +39,15 @@ class SrDao extends DatabaseAccessor<AppDatabase> with _$SrDaoMixin {
           interval: Value(interval),
           repetitions: Value(repetitions),
           nextReviewAt: Value(nextReviewAt),
-          lastReviewAt: Value(lastReviewAt),
+          lastReviewAt: lastReviewAt != null ? Value(lastReviewAt) : Value.absent(),
         ),
       );
 
-  Future<List<UserVocabSr>> getDueReviews({required DateTime upTo}) =>
-      (db.select(db.userVocabSr)..where((t) => t.nextReviewAt.isLessThan(upTo))).get();
+  Future<List<UserVocabSrData>> getDueReviews({required DateTime upTo}) =>
+      (db.select(db.userVocabSr)..where((t) => t.nextReviewAt.isSmallerThanValue(upTo))).get();
 
   Future<int> deleteSr(int vocabId) =>
       (db.delete(db.userVocabSr)..where((t) => t.vocabId.equals(vocabId))).go();
 
-  Future<List<UserVocabSr>> getAllSr() => db.select(db.userVocabSr).get();
+  Future<List<UserVocabSrData>> getAllSr() => db.select(db.userVocabSr).get();
 }

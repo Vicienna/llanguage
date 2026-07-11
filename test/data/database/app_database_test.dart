@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:drift/drift.dart';
+import 'package:drift/drift.dart' hide isNotNull;
 import 'package:drift/native.dart';
 import 'package:llanguage/data/database/app_database.dart';
 import 'package:llanguage/data/database/tables/all_tables.dart';
@@ -169,6 +169,7 @@ void main() {
         unitId: unitId,
         title: 'Lesson 1',
         type: 'vocab',
+        orderIndex: 0,
         contentJson: '{}',
         isPremium: false,
       ));
@@ -186,14 +187,14 @@ void main() {
       final courseId = await database.into(database.courses).insert(CoursesCompanion.insert(title: 'C', sourceLang: 'en', targetLang: 'id', description: 'd', level: 'beginner', createdAt: now, updatedAt: now));
       final levelId = await database.into(database.levels).insert(LevelsCompanion.insert(courseId: courseId, title: 'L1', orderIndex: 0, description: 'd'));
       final unitId = await database.into(database.units).insert(UnitsCompanion.insert(levelId: levelId, title: 'U1', orderIndex: 0, description: 'd'));
-      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'vocab', contentJson: '{}', isPremium: false));
+      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'vocab', orderIndex: 0, orderIndex: 0, contentJson: '{}', isPremium: false));
       final id = await database.into(database.vocab).insert(VocabCompanion.insert(
         lessonId: lessonId,
         sourceWord: 'hello',
         targetWord: 'halo',
-        pronunciation: 'heh-low',
-        exampleSentence: 'Hello world',
-        partOfSpeech: 'interjection',
+        pronunciation: Value('heh-low'),
+        exampleSentence: Value('Hello world'),
+        partOfSpeech: Value('interjection'),
       ));
       final word = await (database.select(database.vocab)..where((t) => t.id.equals(id))).getSingleOrNull();
       expect(word!.sourceWord, equals('hello'));
@@ -208,7 +209,7 @@ void main() {
       final courseId = await database.into(database.courses).insert(CoursesCompanion.insert(title: 'C', sourceLang: 'en', targetLang: 'id', description: 'd', level: 'beginner', createdAt: now, updatedAt: now));
       final levelId = await database.into(database.levels).insert(LevelsCompanion.insert(courseId: courseId, title: 'L1', orderIndex: 0, description: 'd'));
       final unitId = await database.into(database.units).insert(UnitsCompanion.insert(levelId: levelId, title: 'U1', orderIndex: 0, description: 'd'));
-      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'grammar', contentJson: '{}', isPremium: false));
+      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'grammar', orderIndex: 0, contentJson: '{}', isPremium: false));
       final id = await database.into(database.grammar).insert(GrammarCompanion.insert(
         lessonId: lessonId,
         title: 'Present Tense',
@@ -227,7 +228,7 @@ void main() {
       final courseId = await database.into(database.courses).insert(CoursesCompanion.insert(title: 'C', sourceLang: 'en', targetLang: 'id', description: 'd', level: 'beginner', createdAt: now, updatedAt: now));
       final levelId = await database.into(database.levels).insert(LevelsCompanion.insert(courseId: courseId, title: 'L1', orderIndex: 0, description: 'd'));
       final unitId = await database.into(database.units).insert(UnitsCompanion.insert(levelId: levelId, title: 'U1', orderIndex: 0, description: 'd'));
-      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'dialogue', contentJson: '{}', isPremium: false));
+      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'dialogue', orderIndex: 0, contentJson: '{}', isPremium: false));
       final dialogueId = await database.into(database.dialogues).insert(DialoguesCompanion.insert(
         lessonId: lessonId,
         title: 'At the store',
@@ -253,7 +254,7 @@ void main() {
       final courseId = await database.into(database.courses).insert(CoursesCompanion.insert(title: 'C', sourceLang: 'en', targetLang: 'id', description: 'd', level: 'beginner', createdAt: now, updatedAt: now));
       final levelId = await database.into(database.levels).insert(LevelsCompanion.insert(courseId: courseId, title: 'L1', orderIndex: 0, description: 'd'));
       final unitId = await database.into(database.units).insert(UnitsCompanion.insert(levelId: levelId, title: 'U1', orderIndex: 0, description: 'd'));
-      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'quiz', contentJson: '{}', isPremium: false));
+      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'quiz', orderIndex: 0, contentJson: '{}', isPremium: false));
       final id = await database.into(database.quizQuestions).insert(QuizQuestionsCompanion.insert(
         lessonId: lessonId,
         questionType: 'mcq',
@@ -275,7 +276,7 @@ void main() {
       final courseId = await database.into(database.courses).insert(CoursesCompanion.insert(title: 'C', sourceLang: 'en', targetLang: 'id', description: 'd', level: 'beginner', createdAt: now, updatedAt: now));
       final levelId = await database.into(database.levels).insert(LevelsCompanion.insert(courseId: courseId, title: 'L1', orderIndex: 0, description: 'd'));
       final unitId = await database.into(database.units).insert(UnitsCompanion.insert(levelId: levelId, title: 'U1', orderIndex: 0, description: 'd'));
-      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'story', contentJson: '{}', isPremium: false));
+      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'story', orderIndex: 0, contentJson: '{}', isPremium: false));
       final storyId = await database.into(database.stories).insert(StoriesCompanion.insert(
         lessonId: lessonId,
         title: 'The Journey',
@@ -312,7 +313,7 @@ void main() {
       final courseId = await database.into(database.courses).insert(CoursesCompanion.insert(title: 'C', sourceLang: 'en', targetLang: 'id', description: 'd', level: 'beginner', createdAt: now, updatedAt: now));
       final levelId = await database.into(database.levels).insert(LevelsCompanion.insert(courseId: courseId, title: 'L1', orderIndex: 0, description: 'd'));
       final unitId = await database.into(database.units).insert(UnitsCompanion.insert(levelId: levelId, title: 'U1', orderIndex: 0, description: 'd'));
-      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'vocab', contentJson: '{}', isPremium: false));
+      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'vocab', orderIndex: 0, contentJson: '{}', isPremium: false));
       final id = await database.into(database.userLessonProgress).insert(UserLessonProgressCompanion.insert(
         lessonId: lessonId,
         status: 'in_progress',
@@ -329,7 +330,7 @@ void main() {
       final courseId = await database.into(database.courses).insert(CoursesCompanion.insert(title: 'C', sourceLang: 'en', targetLang: 'id', description: 'd', level: 'beginner', createdAt: now, updatedAt: now));
       final levelId = await database.into(database.levels).insert(LevelsCompanion.insert(courseId: courseId, title: 'L1', orderIndex: 0, description: 'd'));
       final unitId = await database.into(database.units).insert(UnitsCompanion.insert(levelId: levelId, title: 'U1', orderIndex: 0, description: 'd'));
-      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'quiz', contentJson: '{}', isPremium: false));
+      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'quiz', orderIndex: 0, contentJson: '{}', isPremium: false));
       final qId = await database.into(database.quizQuestions).insert(QuizQuestionsCompanion.insert(lessonId: lessonId, questionType: 'mcq', question: 'Q?', optionsJson: '[]', correctAnswer: 'A', explanation: 'e'));
       final id = await database.into(database.userQuizAttempts).insert(UserQuizAttemptsCompanion.insert(
         questionId: qId,
@@ -349,8 +350,8 @@ void main() {
       final courseId = await database.into(database.courses).insert(CoursesCompanion.insert(title: 'C', sourceLang: 'en', targetLang: 'id', description: 'd', level: 'beginner', createdAt: now, updatedAt: now));
       final levelId = await database.into(database.levels).insert(LevelsCompanion.insert(courseId: courseId, title: 'L1', orderIndex: 0, description: 'd'));
       final unitId = await database.into(database.units).insert(UnitsCompanion.insert(levelId: levelId, title: 'U1', orderIndex: 0, description: 'd'));
-      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'vocab', contentJson: '{}', isPremium: false));
-      final vocabId = await database.into(database.vocab).insert(VocabCompanion.insert(lessonId: lessonId, sourceWord: 'hello', targetWord: 'halo', partOfSpeech: 'n'));
+      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'vocab', orderIndex: 0, contentJson: '{}', isPremium: false));
+      final vocabId = await database.into(database.vocab).insert(VocabCompanion.insert(lessonId: lessonId, sourceWord: 'hello', targetWord: 'halo', partOfSpeech: Value('n')));
       final id = await database.into(database.userVocabSr).insert(UserVocabSrCompanion.insert(
         vocabId: vocabId,
         easeFactor: 2.5,
@@ -370,8 +371,8 @@ void main() {
       final courseId = await database.into(database.courses).insert(CoursesCompanion.insert(title: 'C', sourceLang: 'en', targetLang: 'id', description: 'd', level: 'beginner', createdAt: now, updatedAt: now));
       final levelId = await database.into(database.levels).insert(LevelsCompanion.insert(courseId: courseId, title: 'L1', orderIndex: 0, description: 'd'));
       final unitId = await database.into(database.units).insert(UnitsCompanion.insert(levelId: levelId, title: 'U1', orderIndex: 0, description: 'd'));
-      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'vocab', contentJson: '{}', isPremium: false));
-      final vocabId = await database.into(database.vocab).insert(VocabCompanion.insert(lessonId: lessonId, sourceWord: 'hello', targetWord: 'halo', partOfSpeech: 'n'));
+      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'vocab', orderIndex: 0, contentJson: '{}', isPremium: false));
+      final vocabId = await database.into(database.vocab).insert(VocabCompanion.insert(lessonId: lessonId, sourceWord: 'hello', targetWord: 'halo', partOfSpeech: Value('n')));
       final id = await database.into(database.userMistakes).insert(UserMistakesCompanion.insert(
         vocabId: vocabId,
         mistakeType: 'spelling',

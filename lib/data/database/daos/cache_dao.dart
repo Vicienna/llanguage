@@ -10,7 +10,7 @@ class CacheDao extends DatabaseAccessor<AppDatabase> with _$CacheDaoMixin {
 
   CacheDao(this.db) : super(db);
 
-  Future<AiCache> setCache({
+  Future<AiCacheData> setCache({
     required String cacheKey,
     required String prompt,
     required String response,
@@ -27,7 +27,7 @@ class CacheDao extends DatabaseAccessor<AppDatabase> with _$CacheDaoMixin {
         expiresAt: expiresAt,
       ));
 
-  Future<AiCache?> getCache(String cacheKey) =>
+  Future<AiCacheData?> getCache(String cacheKey) =>
       (db.select(db.aiCache)..where((t) => t.cacheKey.equals(cacheKey))).getSingleOrNull();
 
   Future<int> deleteCache(String cacheKey) =>

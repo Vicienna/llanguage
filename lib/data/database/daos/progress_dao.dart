@@ -10,7 +10,7 @@ class ProgressDao extends DatabaseAccessor<AppDatabase> with _$ProgressDaoMixin 
 
   ProgressDao(this.db) : super(db);
 
-  Future<UserLessonProgress> createProgress({
+  Future<UserLessonProgressData> createProgress({
     required int lessonId,
     required String status,
     int? score,
@@ -25,10 +25,10 @@ class ProgressDao extends DatabaseAccessor<AppDatabase> with _$ProgressDaoMixin 
         timeSpentSeconds: Value(timeSpentSeconds),
       ));
 
-  Future<UserLessonProgress?> getProgress(int id) =>
+  Future<UserLessonProgressData?> getProgress(int id) =>
       (db.select(db.userLessonProgress)..where((t) => t.id.equals(id))).getSingleOrNull();
 
-  Future<UserLessonProgress> updateProgress(
+  Future<UserLessonProgressData> updateProgress(
     int id, {
     String? status,
     int? score,
@@ -44,12 +44,12 @@ class ProgressDao extends DatabaseAccessor<AppDatabase> with _$ProgressDaoMixin 
         ),
       );
 
-  Future<UserLessonProgress?> getProgressByLesson(int lessonId) =>
+  Future<UserLessonProgressData?> getProgressByLesson(int lessonId) =>
       (db.select(db.userLessonProgress)..where((t) => t.lessonId.equals(lessonId))).getSingleOrNull();
 
-  Future<List<UserLessonProgress>> getAllProgress() =>
+  Future<List<UserLessonProgressData>> getAllProgress() =>
       db.select(db.userLessonProgress).get();
 
-  Future<List<UserLessonProgress>> getCompletedLessons() =>
+  Future<List<UserLessonProgressData>> getCompletedLessons() =>
       (db.select(db.userLessonProgress)..where((t) => t.status.equals('completed'))).get();
 }
