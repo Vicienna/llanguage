@@ -27,7 +27,7 @@ void main() {
       unitId: unitId, title: 'L1', type: 'vocab', orderIndex: 0, contentJson: '{}', isPremium: false,
     ));
     vocabId = await database.into(database.vocab).insert(VocabCompanion.insert(
-      lessonId: lessonId, sourceWord: 'hello', targetWord: 'halo', partOfSpeech: 'n',
+      lessonId: lessonId, sourceWord: 'hello', targetWord: 'halo', partOfSpeech: Value('n'),
     ));
   });
 
@@ -58,16 +58,16 @@ void main() {
       await dao.initSr(vocabId: vocabId, now: now);
       final nextReview = now.add(const Duration(days: 1));
       final updated = await dao.updateSr(
-        vocabId: vocabId,
+        vocabId,
         easeFactor: 2.6,
         interval: 1,
         repetitions: 1,
         nextReviewAt: nextReview,
         lastReviewAt: now,
       );
-      expect(updated.easeFactor, equals(2.6));
-      expect(updated.interval, equals(1));
-      expect(updated.repetitions, equals(1));
+      expect(updated.first.easeFactor, equals(2.6));
+      expect(updated.first.interval, equals(1));
+      expect(updated.first.repetitions, equals(1));
     });
 
     test('getDueReviews returns vocab due for review', () async {
@@ -76,11 +76,11 @@ void main() {
 
       final past = now.subtract(const Duration(hours: 1));
       final due = await dao.getDueReviews(upTo: past);
-      expect(due.length, equals(1));
+      expect(due.length, equals(0));
 
       final future = now.add(const Duration(hours: 1));
-      final notDue = await dao.getDueReviews(upTo: future);
-      expect(notDue.length, equals(1));
+      final dueLater = await dao.getDueReviews(upTo: future);
+      expect(dueLater.length, equals(1));
     });
 
     test('deleteSr removes SR entry', () async {

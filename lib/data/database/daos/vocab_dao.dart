@@ -35,7 +35,7 @@ class VocabDao extends DatabaseAccessor<AppDatabase> with _$VocabDaoMixin {
   Future<List<VocabData>> getVocabByLesson(int lessonId) =>
       (db.select(db.vocab)..where((t) => t.lessonId.equals(lessonId))).get();
 
-  Future<VocabData> updateVocab(
+  Future<List<VocabData>> updateVocab(
     int id, {
     String? sourceWord,
     String? targetWord,
@@ -45,8 +45,8 @@ class VocabDao extends DatabaseAccessor<AppDatabase> with _$VocabDaoMixin {
     String? partOfSpeech,
   }) =>
       (db.update(db.vocab)..where((t) => t.id.equals(id))).writeReturning(VocabCompanion(
-        sourceWord: Value(sourceWord),
-        targetWord: Value(targetWord),
+        sourceWord: sourceWord != null ? Value(sourceWord!) : Value.absent(),
+        targetWord: targetWord != null ? Value(targetWord!) : Value.absent(),
         pronunciation: Value(pronunciation),
         exampleSentence: Value(exampleSentence),
         imageUrl: Value(imageUrl),

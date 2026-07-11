@@ -28,7 +28,7 @@ class ProgressDao extends DatabaseAccessor<AppDatabase> with _$ProgressDaoMixin 
   Future<UserLessonProgressData?> getProgress(int id) =>
       (db.select(db.userLessonProgress)..where((t) => t.id.equals(id))).getSingleOrNull();
 
-  Future<UserLessonProgressData> updateProgress(
+  Future<List<UserLessonProgressData>> updateProgress(
     int id, {
     String? status,
     int? score,
@@ -37,7 +37,7 @@ class ProgressDao extends DatabaseAccessor<AppDatabase> with _$ProgressDaoMixin 
   }) =>
       (db.update(db.userLessonProgress)..where((t) => t.id.equals(id))).writeReturning(
         UserLessonProgressCompanion(
-          status: Value(status),
+          status: status != null ? Value(status!) : Value.absent(),
           score: Value(score),
           completedAt: Value(completedAt),
           timeSpentSeconds: Value(timeSpentSeconds),

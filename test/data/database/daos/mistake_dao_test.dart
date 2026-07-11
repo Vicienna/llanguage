@@ -27,7 +27,7 @@ void main() {
       unitId: unitId, title: 'L1', type: 'vocab', orderIndex: 0, contentJson: '{}', isPremium: false,
     ));
     vocabId = await database.into(database.vocab).insert(VocabCompanion.insert(
-      lessonId: lessonId, sourceWord: 'hello', targetWord: 'halo', partOfSpeech: 'n',
+      lessonId: lessonId, sourceWord: 'hello', targetWord: 'halo', partOfSpeech: Value('n'),
     ));
   });
 
@@ -69,7 +69,7 @@ void main() {
       final now = DateTime.now();
       final created = await dao.addMistake(vocabId: vocabId, mistakeType: 'spelling', mistakeText: 'helo', correction: 'hello', createdAt: now);
       final updated = await dao.incrementMistakeCount(created.id);
-      expect(updated.count, equals(2));
+      expect(updated.first.count, equals(2));
     });
 
     test('deleteMistake removes the mistake', () async {

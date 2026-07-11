@@ -53,7 +53,7 @@ void main() {
       final now = DateTime.now();
       final created = await dao.createCourse(title: 'Original', sourceLang: 'en', targetLang: 'id', description: 'd', level: 'beginner', createdAt: now, updatedAt: now);
       final updated = await dao.updateCourse(created.id, title: 'Updated');
-      expect(updated.title, equals('Updated'));
+      expect(updated.first.title, equals('Updated'));
     });
 
     test('deleteCourse removes a course', () async {

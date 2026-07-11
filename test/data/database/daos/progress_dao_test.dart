@@ -50,8 +50,8 @@ void main() {
     test('updateProgress modifies status', () async {
       final created = await dao.createProgress(lessonId: lessonId, status: 'not_started');
       final updated = await dao.updateProgress(created.id, status: 'completed', score: 100);
-      expect(updated.status, equals('completed'));
-      expect(updated.score, equals(100));
+      expect(updated.first.status, equals('completed'));
+      expect(updated.first.score, equals(100));
     });
 
     test('getProgressByLesson returns progress for lesson', () async {

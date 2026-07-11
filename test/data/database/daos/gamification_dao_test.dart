@@ -53,8 +53,8 @@ void main() {
       await dao.initGems();
       final now = DateTime.now();
       final gems = await dao.addGems(amount: 50, reason: 'achievement', createdAt: now);
-      expect(gems.balance, equals(50));
-      expect(gems.lifetimeEarned, equals(50));
+      expect(gems.first.balance, equals(50));
+      expect(gems.first.lifetimeEarned, equals(50));
     });
 
     test('spendGems decreases balance', () async {
@@ -62,7 +62,7 @@ void main() {
       final now = DateTime.now();
       await dao.addGems(amount: 100, reason: 'earn', createdAt: now);
       final gems = await dao.spendGems(amount: 30, reason: 'purchase', createdAt: now);
-      expect(gems.balance, equals(70));
+      expect(gems.first.balance, equals(70));
     });
 
     test('getGems returns current state', () async {
@@ -94,7 +94,7 @@ void main() {
       final now = DateTime.now();
       await dao.initStreak(now);
       final updated = await dao.updateStreak(currentStreak: 5, longestStreak: 5, lastActiveDate: now);
-      expect(updated.currentStreak, equals(5));
+      expect(updated.first.currentStreak, equals(5));
     });
 
     test('getStreak returns current streak', () async {

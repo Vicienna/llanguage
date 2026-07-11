@@ -10,7 +10,7 @@ class MistakeDao extends DatabaseAccessor<AppDatabase> with _$MistakeDaoMixin {
 
   MistakeDao(this.db) : super(db);
 
-  Future<UserMistakeData> addMistake({
+  Future<UserMistake> addMistake({
     required int vocabId,
     required String mistakeType,
     required String mistakeText,
@@ -26,12 +26,12 @@ class MistakeDao extends DatabaseAccessor<AppDatabase> with _$MistakeDaoMixin {
         createdAt: createdAt,
       ));
 
-  Future<List<UserMistakeData>> getMistakesByVocab(int vocabId) =>
+  Future<List<UserMistake>> getMistakesByVocab(int vocabId) =>
       (db.select(db.userMistakes)..where((t) => t.vocabId.equals(vocabId))).get();
 
-  Future<List<UserMistakeData>> getAllMistakes() => db.select(db.userMistakes).get();
+  Future<List<UserMistake>> getAllMistakes() => db.select(db.userMistakes).get();
 
-  Future<UserMistakeData> incrementMistakeCount(int id) async {
+  Future<List<UserMistake>> incrementMistakeCount(int id) async {
     final current = await (db.select(db.userMistakes)..where((t) => t.id.equals(id))).getSingle();
     return (db.update(db.userMistakes)..where((t) => t.id.equals(id))).writeReturning(
       UserMistakesCompanion(count: Value(current.count + 1)),

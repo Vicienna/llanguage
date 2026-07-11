@@ -50,7 +50,7 @@ void main() {
       final created = await dao.createSession(title: 'Old', modelProvider: 'gpt-4', createdAt: now, updatedAt: now);
       final later = now.add(const Duration(hours: 1));
       final updated = await dao.updateSession(created.id, title: 'New', updatedAt: later);
-      expect(updated.title, equals('New'));
+      expect(updated.first.title, equals('New'));
     });
 
     test('deleteSession removes session', () async {

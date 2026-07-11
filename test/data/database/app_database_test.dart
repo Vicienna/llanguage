@@ -187,7 +187,7 @@ void main() {
       final courseId = await database.into(database.courses).insert(CoursesCompanion.insert(title: 'C', sourceLang: 'en', targetLang: 'id', description: 'd', level: 'beginner', createdAt: now, updatedAt: now));
       final levelId = await database.into(database.levels).insert(LevelsCompanion.insert(courseId: courseId, title: 'L1', orderIndex: 0, description: 'd'));
       final unitId = await database.into(database.units).insert(UnitsCompanion.insert(levelId: levelId, title: 'U1', orderIndex: 0, description: 'd'));
-      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'vocab', orderIndex: 0, orderIndex: 0, contentJson: '{}', isPremium: false));
+      final lessonId = await database.into(database.lessons).insert(LessonsCompanion.insert(unitId: unitId, title: 'L1', type: 'vocab', orderIndex: 0, contentJson: '{}', isPremium: false));
       final id = await database.into(database.vocab).insert(VocabCompanion.insert(
         lessonId: lessonId,
         sourceWord: 'hello',

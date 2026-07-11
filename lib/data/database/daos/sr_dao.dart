@@ -25,7 +25,7 @@ class SrDao extends DatabaseAccessor<AppDatabase> with _$SrDaoMixin {
   Future<UserVocabSrData?> getSrByVocab(int vocabId) =>
       (db.select(db.userVocabSr)..where((t) => t.vocabId.equals(vocabId))).getSingleOrNull();
 
-  Future<UserVocabSrData> updateSr(
+  Future<List<UserVocabSrData>> updateSr(
     int vocabId, {
     required double easeFactor,
     required int interval,

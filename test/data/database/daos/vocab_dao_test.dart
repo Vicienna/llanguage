@@ -58,7 +58,7 @@ void main() {
     test('updateVocab modifies a vocab entry', () async {
       final created = await dao.createVocab(lessonId: lessonId, sourceWord: 'original', targetWord: 'asli');
       final updated = await dao.updateVocab(created.id, sourceWord: 'updated');
-      expect(updated.sourceWord, equals('updated'));
+      expect(updated.first.sourceWord, equals('updated'));
     });
 
     test('deleteVocab removes entry', () async {
