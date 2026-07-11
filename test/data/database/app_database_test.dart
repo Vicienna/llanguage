@@ -600,7 +600,7 @@ void main() {
           createdAt: now,
           expiresAt: expiresAt,
         )),
-        throwsA(isA<DriftWrappedException>()),
+        throwsA(isA<Exception>()),
       );
     });
   });

@@ -74,6 +74,7 @@ void main() {
 
     test('getGemsLog returns all gem transactions', () async {
       final now = DateTime.now();
+      await dao.initGems();
       await dao.addGems(amount: 10, reason: 'a', createdAt: now);
       await dao.addGems(amount: 20, reason: 'b', createdAt: now);
       final log = await dao.getGemsLog();
