@@ -45,8 +45,8 @@ class VocabDao extends DatabaseAccessor<AppDatabase> with _$VocabDaoMixin {
     String? partOfSpeech,
   }) =>
       (db.update(db.vocab)..where((t) => t.id.equals(id))).writeReturning(VocabCompanion(
-        sourceWord: sourceWord != null ? Value(sourceWord!) : Value.absent(),
-        targetWord: targetWord != null ? Value(targetWord!) : Value.absent(),
+        sourceWord: sourceWord != null ? Value(sourceWord) : Value.absent(),
+        targetWord: targetWord != null ? Value(targetWord) : Value.absent(),
         pronunciation: Value(pronunciation),
         exampleSentence: Value(exampleSentence),
         imageUrl: Value(imageUrl),

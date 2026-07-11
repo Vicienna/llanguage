@@ -37,7 +37,7 @@ class ProgressDao extends DatabaseAccessor<AppDatabase> with _$ProgressDaoMixin 
   }) =>
       (db.update(db.userLessonProgress)..where((t) => t.id.equals(id))).writeReturning(
         UserLessonProgressCompanion(
-          status: status != null ? Value(status!) : Value.absent(),
+          status: status != null ? Value(status) : Value.absent(),
           score: Value(score),
           completedAt: Value(completedAt),
           timeSpentSeconds: Value(timeSpentSeconds),

@@ -99,7 +99,7 @@ class GamificationDao extends DatabaseAccessor<AppDatabase> with _$GamificationD
           currentStreak: Value(currentStreak),
           longestStreak: Value(longestStreak),
           lastActiveDate: Value(lastActiveDate),
-          frozenDays: frozenDays != null ? Value(frozenDays!) : Value.absent(),
+          frozenDays: frozenDays != null ? Value(frozenDays) : Value.absent(),
         ),
       );
 

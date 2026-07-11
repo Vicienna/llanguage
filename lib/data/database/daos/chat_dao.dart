@@ -35,8 +35,8 @@ class ChatDao extends DatabaseAccessor<AppDatabase> with _$ChatDaoMixin {
   }) =>
       (db.update(db.chatSessions)..where((t) => t.id.equals(id))).writeReturning(
         ChatSessionsCompanion(
-          title: title != null ? Value(title!) : Value.absent(),
-          updatedAt: updatedAt != null ? Value(updatedAt!) : Value.absent(),
+          title: title != null ? Value(title) : Value.absent(),
+          updatedAt: updatedAt != null ? Value(updatedAt) : Value.absent(),
         ),
       );
 

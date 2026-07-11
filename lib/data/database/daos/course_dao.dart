@@ -47,13 +47,13 @@ class CourseDao extends DatabaseAccessor<AppDatabase> with _$CourseDaoMixin {
     DateTime? updatedAt,
   }) =>
       (db.update(db.courses)..where((t) => t.id.equals(id))).writeReturning(CoursesCompanion(
-        title: title != null ? Value(title!) : Value.absent(),
-        sourceLang: sourceLang != null ? Value(sourceLang!) : Value.absent(),
-        targetLang: targetLang != null ? Value(targetLang!) : Value.absent(),
-        description: description != null ? Value(description!) : Value.absent(),
-        level: level != null ? Value(level!) : Value.absent(),
+        title: title != null ? Value(title) : Value.absent(),
+        sourceLang: sourceLang != null ? Value(sourceLang) : Value.absent(),
+        targetLang: targetLang != null ? Value(targetLang) : Value.absent(),
+        description: description != null ? Value(description) : Value.absent(),
+        level: level != null ? Value(level) : Value.absent(),
         thumbnailUrl: thumbnailUrl != null ? Value(thumbnailUrl) : Value.absent(),
-        updatedAt: updatedAt != null ? Value(updatedAt!) : Value.absent(),
+        updatedAt: updatedAt != null ? Value(updatedAt) : Value.absent(),
       ));
 
   Future<int> deleteCourse(int id) =>
