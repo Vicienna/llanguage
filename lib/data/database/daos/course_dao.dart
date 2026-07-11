@@ -52,7 +52,7 @@ class CourseDao extends DatabaseAccessor<AppDatabase> with _$CourseDaoMixin {
         targetLang: targetLang != null ? Value(targetLang!) : Value.absent(),
         description: description != null ? Value(description!) : Value.absent(),
         level: level != null ? Value(level!) : Value.absent(),
-        thumbnailUrl: thumbnailUrl != null ? Value(thumbnailUrl!) : Value.absent(),
+        thumbnailUrl: thumbnailUrl != null ? Value(thumbnailUrl) : Value.absent(),
         updatedAt: updatedAt != null ? Value(updatedAt!) : Value.absent(),
       ));
 
