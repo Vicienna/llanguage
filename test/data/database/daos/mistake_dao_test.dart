@@ -3,7 +3,6 @@ import 'package:drift/drift.dart' hide isNotNull, isNull;
 import 'package:drift/native.dart';
 import 'package:llanguage/data/database/app_database.dart';
 import 'package:llanguage/data/database/daos/mistake_dao.dart';
-import 'package:llanguage/data/database/tables/all_tables.dart';
 
 void main() {
   late AppDatabase database;
