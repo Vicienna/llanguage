@@ -11,6 +11,10 @@ void main() {
   late MockHttpClient mockClient;
   late DuckDuckGoService service;
 
+  setUpAll(() {
+    registerFallbackValue(Uri());
+  });
+
   setUp(() {
     mockClient = MockHttpClient();
     service = DuckDuckGoService(client: mockClient);
@@ -55,7 +59,7 @@ void main() {
   });
 
   test('dispose closes client', () async {
-    when(() => mockClient.close()).thenAnswer((_) async => () {});
+    when(() => mockClient.close()).thenReturn(null);
 
     service.dispose();
 
