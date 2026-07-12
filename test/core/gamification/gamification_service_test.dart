@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:llanguage/data/database/app_database.dart';
 import 'package:llanguage/data/database/daos/gamification_dao.dart';
 import 'package:llanguage/core/gamification/gamification_service.dart';
 import 'package:mocktail/mocktail.dart';

@@ -21,7 +21,7 @@ class GamificationService {
   Future<StreakStatus> getStreakStatus() async {
     final streak = await _dao.getStreak();
     if (streak == null) {
-      const status = StreakStatus(
+      final status = StreakStatus(
         currentStreak: 0,
         longestStreak: 0,
         lastActiveDate: DateTime(0),
