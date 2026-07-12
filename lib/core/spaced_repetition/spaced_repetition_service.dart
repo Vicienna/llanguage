@@ -1,3 +1,4 @@
+import '../../data/database/app_database.dart';
 import '../../data/database/daos/sr_dao.dart';
 import 'sm2_algorithm.dart';
 
