@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/providers/database_provider.dart';
+import '../../data/database/app_database.dart';
 import '../../data/database/daos/course_dao.dart';
 
 final coursesProvider = FutureProvider<List<Course>>((ref) {
