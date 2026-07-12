@@ -5,9 +5,12 @@ class AiService {
   final Map<String, AiProvider> _providers = {};
   AiProvider? _activeProvider;
 
-  static final AiService _instance = AiService._();
+  static final AiService _instance = AiService._internal();
   static AiService get instance => _instance;
-  AiService._();
+
+  AiService();
+
+  AiService._internal();
 
   void registerProvider(AiProvider provider) {
     _providers[provider.name] = provider;

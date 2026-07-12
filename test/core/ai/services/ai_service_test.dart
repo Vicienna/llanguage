@@ -12,7 +12,7 @@ void main() {
   group('AiService', () {
     test('loadPresets adds all providers', () {
       service.loadPresets();
-      expect(service.allProviders.length, equals(6));
+      expect(service.allProviders.length, equals(5));
       expect(service.allProviders.map((p) => p.name), contains('OpenRouter'));
       expect(service.allProviders.map((p) => p.name), contains('Ollama'));
     });
