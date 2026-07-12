@@ -54,7 +54,7 @@ class ReadingModeService {
 
   List<String> extractPotentialVocab(String text, String language) {
     final words = text.split(RegExp(r'\s+'))
-        .map((w) => w.replaceAll(RegExp(r"[^\p{L}\p{N}']"), ''))
+        .map((w) => w.replaceAll(RegExp(r"[^\p{L}\p{N}']", unicode: true), ''))
         .where((w) => w.length >= 3 && w.length <= 30)
         .map((w) => w.toLowerCase())
         .toSet()
