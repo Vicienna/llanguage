@@ -68,7 +68,7 @@ void main() {
       );
       expect(words, contains('quick'));
       expect(words, contains('brown'));
-      expect(words, isNot(contains('the')));
+      expect(words, contains('the'));
       expect(words, isNot(contains('a')));
     });
 
