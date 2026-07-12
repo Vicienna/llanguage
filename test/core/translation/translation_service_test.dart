@@ -7,7 +7,6 @@ import 'package:llanguage/core/duckduckgo/duckduckgo_result.dart';
 import 'package:llanguage/core/duckduckgo/duckduckgo_service.dart';
 import 'package:llanguage/core/translation/translation_cache.dart';
 import 'package:llanguage/core/translation/models/translation_request.dart';
-import 'package:llanguage/core/translation/models/translation_result.dart';
 import 'package:llanguage/core/translation/translation_service.dart';
 import 'package:mocktail/mocktail.dart';
 import '../fakes/fake_cache_dao.dart';

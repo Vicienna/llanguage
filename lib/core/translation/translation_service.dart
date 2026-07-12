@@ -1,6 +1,5 @@
 import 'dart:convert';
 import '../ai/models/ai_request.dart';
-import '../ai/models/ai_response.dart';
 import '../ai/providers/ai_provider.dart';
 import '../duckduckgo/duckduckgo_result.dart';
 import '../duckduckgo/duckduckgo_service.dart';
