@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/theme/app_colors.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('LLanguage'),
@@ -16,105 +18,84 @@ class HomePage extends ConsumerWidget {
           ),
         ],
       ),
-      body: Padding(
+      body: ListView(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Streak Card
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    const Icon(Icons.local_fire_department, color: Colors.orange, size: 32),
-                    const SizedBox(width: 12),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Streak', style: Theme.of(context).textTheme.titleMedium),
-                        const Text('0 hari', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-
-            // Quick Actions
-            Text('Menu', style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 12),
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                mainAxisSpacing: 12,
-                crossAxisSpacing: 12,
-                children: [
-                  _MenuCard(
-                    icon: Icons.translate,
-                    label: 'Translator',
-                    color: Colors.purple,
-                    onTap: () => Navigator.pushNamed(context, '/translator'),
-                  ),
-                  _MenuCard(
-                    icon: Icons.school,
-                    label: 'Course',
-                    color: Colors.blue,
-                    onTap: () => Navigator.pushNamed(context, '/courses'),
-                  ),
-                  _MenuCard(
-                    icon: Icons.chat,
-                    label: 'AI Chat',
-                    color: Colors.teal,
-                    onTap: () {},
-                  ),
-                  _MenuCard(
-                    icon: Icons.psychology,
-                    label: 'Review',
-                    color: Colors.orange,
-                    onTap: () {},
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+        children: [
+          Text('Welcome!', style: theme.textTheme.headlineMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+          )),
+          const SizedBox(height: 8),
+          Text('What do you want to learn today?', style: theme.textTheme.bodyLarge?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+          )),
+          const SizedBox(height: 24),
+          _FeatureCard(
+            icon: Icons.translate,
+            title: 'Translator',
+            subtitle: 'Translate words & sentences with AI',
+            color: AppColors.primary,
+            onTap: () => Navigator.pushNamed(context, '/translator'),
+          ),
+          const SizedBox(height: 12),
+          _FeatureCard(
+            icon: Icons.menu_book,
+            title: 'Courses',
+            subtitle: 'Structured learning paths',
+            color: AppColors.secondary,
+            onTap: () => Navigator.pushNamed(context, '/courses'),
+          ),
+          const SizedBox(height: 12),
+          _FeatureCard(
+            icon: Icons.flash_on,
+            title: 'Flashcards',
+            subtitle: 'Spaced repetition practice',
+            color: AppColors.posVerb,
+            onTap: null,
+          ),
+          const SizedBox(height: 12),
+          _FeatureCard(
+            icon: Icons.emoji_events,
+            title: 'Achievements',
+            subtitle: 'Track your progress & streaks',
+            color: AppColors.achievementPurple,
+            onTap: null,
+          ),
+        ],
       ),
     );
   }
 }
 
-class _MenuCard extends StatelessWidget {
+class _FeatureCard extends StatelessWidget {
   final IconData icon;
-  final String label;
+  final String title;
+  final String subtitle;
   final Color color;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
-  const _MenuCard({
+  const _FeatureCard({
     required this.icon,
-    required this.label,
+    required this.title,
+    required this.subtitle,
     required this.color,
-    required this.onTap,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Card(
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 48, color: color),
-              const SizedBox(height: 8),
-              Text(label, style: Theme.of(context).textTheme.titleMedium),
-            ],
-          ),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: color.withValues(alpha: 0.15),
+          child: Icon(icon, color: color),
         ),
+        title: Text(title, style: theme.textTheme.titleMedium?.copyWith(
+          fontWeight: FontWeight.w600,
+        )),
+        subtitle: Text(subtitle),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: onTap,
       ),
     );
   }

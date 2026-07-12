@@ -1,48 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/providers/database_provider.dart';
+import '../../core/constants/app_constants.dart';
 
-class SplashPage extends ConsumerStatefulWidget {
+class SplashPage extends ConsumerWidget {
   const SplashPage({super.key});
 
   @override
-  ConsumerState<SplashPage> createState() => _SplashPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    ref.listen(databaseInitProvider, (prev, next) {
+      if (next.hasValue || next.hasError) {
+        Navigator.of(context).pushReplacementNamed('/home');
+      }
+    });
 
-class _SplashPageState extends ConsumerState<SplashPage> {
-  @override
-  void initState() {
-    super.initState();
-    _initApp();
-  }
-
-  Future<void> _initApp() async {
-    await Future.delayed(const Duration(seconds: 2));
-    if (mounted) {
-      Navigator.pushReplacementNamed(context, '/home');
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            const FlutterLogo(size: 120),
+            Icon(Icons.translate, size: 80, color: theme.colorScheme.primary),
             const SizedBox(height: 24),
-            Text(
-              'LLanguage',
-              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Belajar Bahasa Jadi Lebih Dalam',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const SizedBox(height: 32),
+            Text(AppConstants.appName, style: theme.textTheme.headlineLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.primary,
+            )),
+            const SizedBox(height: 12),
+            Text('Learn languages smarter', style: theme.textTheme.bodyLarge?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            )),
+            const SizedBox(height: 48),
             const CircularProgressIndicator(),
           ],
         ),

@@ -1,40 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../core/providers/database_provider.dart';
+import '../../data/database/app_database.dart';
+
+final coursesProvider = FutureProvider<List<Course>>((ref) {
+  final db = ref.read(databaseProvider);
+  return db.courseDao.getAllCourses();
+});
 
 class CourseOverviewPage extends ConsumerWidget {
   const CourseOverviewPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final courses = ref.watch(coursesProvider);
+    final theme = Theme.of(context);
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Course Saya'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.school, size: 80, color: Colors.grey[400]),
-            const SizedBox(height: 16),
-            Text(
-              'Belum ada course aktif',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Buat course baru untuk mulai belajar',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey,
+      appBar: AppBar(title: const Text('Courses')),
+      body: courses.when(
+        data: (list) => list.isEmpty
+            ? Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.menu_book, size: 64, color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.4)),
+                    const SizedBox(height: 16),
+                    Text('No courses yet', style: theme.textTheme.titleMedium),
+                    const SizedBox(height: 8),
+                    Text('Courses will appear here once available', style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    )),
+                  ],
+                ),
+              )
+            : ListView.builder(
+                padding: const EdgeInsets.all(16),
+                itemCount: list.length,
+                itemBuilder: (_, i) => Card(
+                  child: ListTile(
+                    leading: CircleAvatar(child: Text('${i + 1}')),
+                    title: Text(list[i].title),
+                    subtitle: Text('${list[i].description ?? ""}'),
+                    trailing: const Icon(Icons.chevron_right),
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.add),
-              label: const Text('Buat Course Baru'),
-            ),
-          ],
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (e, _) => Center(child: Text('Error: $e')),
       ),
     );
   }
