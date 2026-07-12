@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/ai/services/ai_service.dart';
 import '../../core/providers/ai_providers.dart';
 import '../../core/theme/app_colors.dart';
 

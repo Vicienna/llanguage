@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/providers/database_provider.dart';
-import '../../data/database/app_database.dart';
+import '../../data/database/daos/course_dao.dart';
 
 final coursesProvider = FutureProvider<List<Course>>((ref) {
   final db = ref.read(databaseProvider);
-  return db.courseDao.getAllCourses();
+  final dao = CourseDao(db);
+  return dao.getAllCourses();
 });
 
 class CourseOverviewPage extends ConsumerWidget {
@@ -41,7 +42,7 @@ class CourseOverviewPage extends ConsumerWidget {
                   child: ListTile(
                     leading: CircleAvatar(child: Text('${i + 1}')),
                     title: Text(list[i].title),
-                    subtitle: Text('${list[i].description ?? ""}'),
+                    subtitle: Text(list[i].description, maxLines: 1, overflow: TextOverflow.ellipsis),
                     trailing: const Icon(Icons.chevron_right),
                   ),
                 ),
