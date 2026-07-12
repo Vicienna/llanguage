@@ -26,7 +26,6 @@ dependencies:
   fl_chart: ^1.2.0
   lottie: ^3.5.1
   home_widget: ^0.9.3
-  html: ^0.15.6
   json_annotation: ^4.12.0
   freezed_annotation: ^3.1.0
   uuid: ^4.5.3
