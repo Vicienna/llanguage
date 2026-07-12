@@ -5,7 +5,6 @@ import 'package:llanguage/core/ai/providers/ai_provider.dart';
 import 'package:llanguage/core/duckduckgo/duckduckgo_service.dart';
 import 'package:llanguage/core/flashcard/flashcard_generator.dart';
 import 'package:llanguage/core/image_analyzer/image_analyzer_service.dart';
-import 'package:llanguage/core/image_analyzer/models/image_analysis_result.dart';
 import 'package:llanguage/core/translation/translation_cache.dart';
 import 'package:llanguage/core/translation/translation_service.dart';
 import 'package:mocktail/mocktail.dart';

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import '../ai/models/ai_request.dart';
 import '../ai/providers/ai_provider.dart';
-import '../duckduckgo/duckduckgo_result.dart';
 import '../duckduckgo/duckduckgo_service.dart';
 
 class RelatedVocab {
@@ -62,10 +61,13 @@ class VocabExplorerService {
       final json = _extractJson(response.content);
       final list = json['related'] as List<dynamic>;
       return list
-          .map((e) => RelatedVocab(
-                word: (e as Map<String, dynamic>)['word'] as String,
-                relation: (e as Map<String, dynamic>)['relation'] as String? ?? 'related',
-              ))
+          .map((e) {
+            final m = e as Map<String, dynamic>;
+            return RelatedVocab(
+              word: m['word'] as String,
+              relation: m['relation'] as String? ?? 'related',
+            );
+          })
           .toList();
     } catch (_) {
       return [];
