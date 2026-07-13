@@ -50,7 +50,7 @@ class HomePage extends ConsumerWidget {
             title: 'Flashcards',
             subtitle: 'Spaced repetition practice',
             color: AppColors.posVerb,
-            onTap: null,
+            onTap: () => Navigator.pushNamed(context, '/flashcards'),
           ),
           const SizedBox(height: 12),
           _FeatureCard(
@@ -58,7 +58,7 @@ class HomePage extends ConsumerWidget {
             title: 'Achievements',
             subtitle: 'Track your progress & streaks',
             color: AppColors.achievementPurple,
-            onTap: null,
+            onTap: () => Navigator.pushNamed(context, '/achievements'),
           ),
         ],
       ),

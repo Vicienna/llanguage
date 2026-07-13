@@ -6,6 +6,8 @@ import 'features/splash/splash_page.dart';
 import 'features/home/home_page.dart';
 import 'features/translator/translator_page.dart';
 import 'features/course/course_overview_page.dart';
+import 'features/flashcard/flashcard_page.dart';
+import 'features/achievement/achievement_page.dart';
 import 'features/settings/settings_page.dart';
 
 class LLanguageApp extends ConsumerWidget {
@@ -30,6 +32,10 @@ class LLanguageApp extends ConsumerWidget {
             return MaterialPageRoute(builder: (_) => const TranslatorPage());
           case '/courses':
             return MaterialPageRoute(builder: (_) => const CourseOverviewPage());
+          case '/flashcards':
+            return MaterialPageRoute(builder: (_) => const FlashcardPage());
+          case '/achievements':
+            return MaterialPageRoute(builder: (_) => const AchievementPage());
           case '/settings':
             return MaterialPageRoute(builder: (_) => const SettingsPage());
           default:
