@@ -16,7 +16,7 @@ final databaseInitProvider = FutureProvider<void>((ref) async {
   final saved = await storage.getApiKey('_active_provider');
   if (saved != null) {
     ref.read(aiServiceProvider).setActiveProvider(saved);
-    ref.read(activeProviderNameProvider.notifier).state = saved;
+    ref.read(activeProviderNameProvider.notifier).set(saved);
   }
   final db = ref.read(databaseProvider);
   await db.customSelect('SELECT 1').get();

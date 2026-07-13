@@ -1,20 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'ai_providers.dart';
 
-final activeProviderNameProvider = StateProvider<String?>((ref) => null);
+class _ActiveProviderName extends Notifier<String?> {
+  @override
+  String? build() => null;
+  void set(String? name) => state = name;
+}
 
-final settingsInitProvider = FutureProvider<void>((ref) async {
-  final storage = ref.read(secureStorageProvider);
-  final saved = await storage.getApiKey('_active_provider');
-  if (saved != null) {
-    ref.read(aiServiceProvider).setActiveProvider(saved);
-    ref.read(activeProviderNameProvider).state = saved;
-  }
-});
+final activeProviderNameProvider = NotifierProvider<_ActiveProviderName, String?>(_ActiveProviderName.new);
 
 Future<void> setActiveProvider(WidgetRef ref, String name) async {
   ref.read(aiServiceProvider).setActiveProvider(name);
-  ref.read(activeProviderNameProvider).state = name;
+  ref.read(activeProviderNameProvider.notifier).set(name);
   final storage = ref.read(secureStorageProvider);
   await storage.saveApiKey('_active_provider', name);
 }
